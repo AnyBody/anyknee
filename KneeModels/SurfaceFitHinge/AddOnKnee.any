@@ -1,0 +1,121 @@
+#ifndef DEFINE_LOCAL_COORDINATE
+#define DEFINE_LOCAL_COORDINATE(rNode) sRel = ((rNode)-.rOffset)*.AOffset;
+#endif 
+#ifndef DEFINE_LOCAL_COORDINATE_CT2scaledSeg
+#define DEFINE_LOCAL_COORDINATE_CT2scaledSeg(rNode) sRel = (..CustomMarkerScaling(rNode)-.rOffset)*.AOffset;
+#endif 
+
+#define AddPointCloud(name,setR,setB) AnyDrawPointCloud ptcl_##name = {Points = .name##_surf.points;PointStyle.Style = PointStyleSphere;Points3D = On;ShowNames = On;RGB={setR,0,setB};PointStyle.Size=0.0015;};
+
+// fit cylinder to given point cloud without fixed direction
+#define FitCylinder(name) AnyRefNode name = {sRel = test_cylinder_fit.sRel; ARel = test_cylinder_fit.ARel;AnyDrawNode drw={Visible=Off;ScaleXYZ={0,0,0}*0.001;};AnyDrawRefFrame fr = {Visible=Off;ScaleXYZ={1,1,1}*0.1;RGB={1,0,0};};  AnySurfCylinderFit test_cylinder_fit = {Length = 0.000001;FixedDirection = Off;Direction = {0.0, 0.0, 1.0}; Points = DesignVar(..name##_points);AnyDrawParamSurf srf_##name={Visible = Off;RGB={0,1,1};Opacity=0.2;};};}; 
+// fit cylinder to condyle point clouds with direction fixed to secondary PC of a cylinder fit to medial and lateral condyles combined
+#define FitCylinder_PC(name1,name2,Vis_n,Vis_par) AnyRefNode name2 = {sRel = test_cylinder_fit.sRel; ARel = (test_cylinder_fit.ARel);AnyDrawNode drw={Visible=Vis_n;RGB= {0,0,0};ScaleXYZ={1,1,1}*0.002;}; AnySurfCylinderFit test_cylinder_fit = {Length = 0.00001;FixedDirection =On;Direction = ..name1.test_cylinder_fit.ARel[2]*...AMirroring; Points = DesignVar(..name2##_surf.points);AnyDrawParamSurf srf_##name2={Visible =Vis_par;RGB={0,1,1};Opacity=0.2;};};}; 
+
+Main = {
+
+  HumanModel ={
+    //If the right knee user-defined
+    #ifdef BM_JOINT_TYPE_KNEE_RIGHT
+    #if BM_JOINT_TYPE_KNEE_RIGHT == _JOINT_TYPE_USERDEFINED_
+    
+
+    BodyModel={
+      
+      //then add the following to the right leg:
+      Right.Leg = {
+        
+        Seg ={
+          
+          //Matrix does nothing, needed for implementation of left 
+          AnyMat33 AMirroring = { {1,0,0},{0,1,0},{0,0,1}};
+          
+          Thigh  = {
+            
+            #include "SubjectSpecificScaling.any"
+            #include "Femur_FitCylinders.any"
+
+            KneeJoint = {
+              AnyVec3 sRelUnscaled = ((.StdPar.EpicondylusFemorisLateralis)+(.StdPar.EpicondylusFemorisMedialis))/2;
+            };
+            
+            AnyString Bone = "Femur";
+            
+          }; 
+          
+          Shank  = {
+            
+            AnyString Bone = "Tibia";
+            #include "SubjectSpecificScaling.any"
+            #include "Tibia_AddOn.any"
+            
+          };
+          
+        };
+        
+        #include "Joints_Drivers.any"
+        
+      };
+    };
+    
+    #endif
+    #endif
+    
+    //If the left knee user-defined
+    #ifdef BM_JOINT_TYPE_KNEE_LEFT
+    #if BM_JOINT_TYPE_KNEE_LEFT == _JOINT_TYPE_USERDEFINED_
+    
+
+    BodyModel={
+      
+      Left.Leg={
+        
+        Seg ={
+          
+          //Mirroring matrix needed for implementation of left moving-axis
+          AnyMat33 AMirroring = { {1,0,0},{0,1,0},{0,0,-1}};
+          
+          Thigh  = {  
+            
+            KneeJoint = {
+              
+              AnyVec3 sRelUnscaled = ((.StdPar.EpicondylusFemorisLateralis)+(.StdPar.EpicondylusFemorisMedialis))/2;
+              
+            };
+            
+            AnyString Bone = "Femur";
+            #include "SubjectSpecificScaling.any"
+            #include "Femur_FitCylinders.any"
+            
+          };
+          
+          Shank  = {  
+            
+            AnyString Bone = "Tibia";
+            #include "SubjectSpecificScaling.any"
+            #include "Tibia_AddOn.any"
+            
+          };
+          
+        };
+        
+        #include "Joints_Drivers.any"
+        
+      };
+    };
+    
+    #endif
+    #endif
+    
+  };
+};
+
+
+
+
+
+
+
+
+
+
