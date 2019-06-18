@@ -1,4 +1,4 @@
-AnyFunTransform3D &CT2scaledSeg = SubjectSpecificScaling.RegTransform;
+AnyFunTransform3D &CT2scaledSeg = SubjectSpecificScaling.CT2scaledSeg;
 
 AnyVec3 rOffset= KneeJointAnatomicalFrame.sRel;
 AnyMat33 AOffset= KneeJointAnatomicalFrame.ARel;
@@ -36,7 +36,7 @@ KneeJointAnatomicalFrame={
     AnyVec3 Y = cross(Z,X);
     sRel= O;
     ARel ={X/vnorm(X),Y/vnorm(Y),Z/vnorm(Z)}'; 
-//    AnyDrawRefFrame drw={Visible= On; ScaleXYZ=0.1*{1,1,1};RGB={0,1,0};};
+    AnyDrawRefFrame drw={Visible= On; ScaleXYZ=0.1*{1,1,1};RGB={0,1,0};};
   };  
 };
 

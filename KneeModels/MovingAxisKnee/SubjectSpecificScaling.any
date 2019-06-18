@@ -14,7 +14,7 @@ AnyFolder SubjectSpecificScaling = {
   };  
   
   //transformation from the scaled segmental ref. frame to CT ref. frame
-  AnyFunTransform3DLin2 Seg2CT = {
+  AnyFunTransform3DLin2 scaledSeg2CT = {
     AnyString SourceFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.1\Seg_RefFrame_STLs\Seg_" + ..Bone + "_R.stl";
     AnyString TargetFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.1\CT_RefFrame_STLs\CT_" + ..Bone + "_R.stl";
     AnyFileVar SourceSTL = SourceFN;

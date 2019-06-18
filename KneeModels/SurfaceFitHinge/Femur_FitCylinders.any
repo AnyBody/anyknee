@@ -1,5 +1,5 @@
- AnyFunTransform3D &CT2scaledSeg = SubjectSpecificScaling.RegTransform;
-AnyFunTransform3D &Femur2CT = SubjectSpecificScaling.Seg2CT;
+AnyFunTransform3D &CT2scaledSeg = SubjectSpecificScaling.CT2scaledSeg;
+AnyFunTransform3D &Femur2CT = SubjectSpecificScaling.scaledSeg2CT;
 //------------------------------------------------------------------------------
 // Surface fits for entire lateral and medial condyles, for new hinge joint model
 

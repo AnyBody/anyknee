@@ -3,8 +3,7 @@ Jnt = {
     Axis = z;
     AnyRefFrame &Femur = ..Seg.Thigh.KneeJointAnatomicalFrame.KneeJoint;
     AnyRefFrame &Tibia = ..Seg.Shank.KneeJointAnatomicalFrame.KneeJoint;
-  };
-  
+  }; 
 };
 
 

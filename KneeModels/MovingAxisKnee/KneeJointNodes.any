@@ -8,7 +8,7 @@ Thigh = {
 
  
 Shank = {  
-  AnyFunTransform3D &Femur_to_CT = .Thigh.SubjectSpecificScaling.Seg2CT;
+  AnyFunTransform3D &Femur_to_CT = .Thigh.SubjectSpecificScaling.scaledSeg2CT;
   AnyRefNode KneeJoint = {
     sRel = (
        .CT2scaledSeg(.Femur_to_CT(..Thigh.EpicondylusFemorisMedialis.sRel))
