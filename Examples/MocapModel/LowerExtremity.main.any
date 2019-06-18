@@ -15,8 +15,8 @@
 #define BM_JOINT_TYPE_KNEE_LEFT _JOINT_TYPE_USERDEFINED_
 
 // Add in new knee joint
-#include "../../KneeModels/SurfaceFitHinge/AddOnKnee.any"
-//#include "../../KneeModels/MovingAxisKnee/AddOnKnee.any"
+//#include "../../KneeModels/SurfaceFitHinge/AddOnKnee.any"
+#include "../../KneeModels/MovingAxisKnee/AddOnKnee.any"
 //---------------------------------------------------------------- 
 
 // Include the AnyMoCap Framwork
