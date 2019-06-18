@@ -1,7 +1,7 @@
  AnySeg InvisibleFemur_TF = {
   
-  AnyFunTransform3D &CustomMarkerScaling = .Thigh.SubjectSpecificScaling.RegTransform;
-  AnyFunTransform3D &Flex2scaledSeg =.Thigh.SubjectSpecificScaling.Flex2scaledSeg;
+  AnyFunTransform3D &CT2scaledSeg = .Thigh.SubjectSpecificScaling.CT2scaledSeg;
+  AnyFunTransform3D &Flexed2scaledSeg =.Thigh.SubjectSpecificScaling.Flexed2scaledSeg;
   
   Mass = 0;
   Jii = {0,0,0}; 
@@ -11,9 +11,9 @@
   AnyDrawRefFrame fr = {Visible=Off;ScaleXYZ={1,1,1}*0.1;RGB={1,0,0};}; 
   
   AnyRefNode MA_AnatomicalFrame = { 
-    AnyVec3 O = (.CustomMarkerScaling(..Thigh.CT_Data.Medial_TF_EFC) + .CustomMarkerScaling(..Thigh.CT_Data.Lateral_TF_EFC))/2; 
-    AnyVec3 Z = ...Sign*(.CustomMarkerScaling(..Thigh.CT_Data.Lateral_TF_EFC) - .CustomMarkerScaling(..Thigh.CT_Data.Medial_TF_EFC));
-    AnyVec3 X = cross(.CustomMarkerScaling(..Thigh.CT_Data.HipJointCenter)-O,Z);
+    AnyVec3 O = (.CT2scaledSeg(..Thigh.CT_Data.Medial_TF_EFC) + .CT2scaledSeg(..Thigh.CT_Data.Lateral_TF_EFC))/2; 
+    AnyVec3 Z = ...Sign*(.CT2scaledSeg(..Thigh.CT_Data.Lateral_TF_EFC) - .CT2scaledSeg(..Thigh.CT_Data.Medial_TF_EFC));
+    AnyVec3 X = cross(.CT2scaledSeg(..Thigh.CT_Data.HipJointCenter)-O,Z);
     AnyVec3 Y = cross(Z,X);
     AnyVec3 rOffset= O;
     AnyMat33 AOffset={X/vnorm(X),Y/vnorm(Y),Z/vnorm(Z)}';
@@ -24,7 +24,7 @@
     };
     
     AnyRefNode Medial_TF_FFC = {
-      DEFINE_LOCAL_COORDINATE_Flex2scaledSeg(...Thigh.Flexed_Data.Medial_TF_FFC)
+      DEFINE_LOCAL_COORDINATE_Flexed2scaledSeg(...Thigh.Flexed_Data.Medial_TF_FFC)
       AnyDrawNode drw ={Visible=Off;ScaleXYZ=0.002*{1,1,1};RGB={1,0,0};};
     };
     
@@ -34,7 +34,7 @@
     }; 
     
     AnyRefNode TEMP_Lateral_TF_FFC = {
-      DEFINE_LOCAL_COORDINATE_Flex2scaledSeg(...Thigh.Flexed_Data.Lateral_TF_FFC)
+      DEFINE_LOCAL_COORDINATE_Flexed2scaledSeg(...Thigh.Flexed_Data.Lateral_TF_FFC)
       AnyDrawNode drw ={Visible=Off;ScaleXYZ=0.002*{1,1,1};RGB={1,1,1};};
     };
     
@@ -53,8 +53,8 @@
 };  
 
 AnySeg InvisibleTibia = {
-  AnyFunTransform3D &CustomMarkerScaling = .Shank.SubjectSpecificScaling.RegTransform;
-  AnyFunTransform3D &Flex2scaledSeg = .Shank.SubjectSpecificScaling.Flex2scaledSeg;
+  AnyFunTransform3D &CT2scaledSeg = .Shank.SubjectSpecificScaling.CT2scaledSeg;
+  AnyFunTransform3D &Flexed2scaledSeg = .Shank.SubjectSpecificScaling.Flexed2scaledSeg;
   
   Mass = 0;
   Jii = {0, 0, 0};
@@ -64,9 +64,9 @@ AnySeg InvisibleTibia = {
   AnyDrawRefFrame fr = {Visible=Off;ScaleXYZ={1,1,1}*0.1;RGB={1,0,0};}; 
   
   AnyRefNode MA_AnatomicalFrame ={
-    AnyVec3 O = (.CustomMarkerScaling(..Thigh.CT_Data.Medial_TF_EFC) + .CustomMarkerScaling(..Thigh.CT_Data.Lateral_TF_EFC))/2; 
-    AnyVec3 Z = ...Sign*(.CustomMarkerScaling(..Thigh.CT_Data.Lateral_TF_EFC) - .CustomMarkerScaling(..Thigh.CT_Data.Medial_TF_EFC));
-    AnyVec3 X = cross(.CustomMarkerScaling(..Thigh.CT_Data.HipJointCenter)-O,Z);
+    AnyVec3 O = (.CT2scaledSeg(..Thigh.CT_Data.Medial_TF_EFC) + .CT2scaledSeg(..Thigh.CT_Data.Lateral_TF_EFC))/2; 
+    AnyVec3 Z = ...Sign*(.CT2scaledSeg(..Thigh.CT_Data.Lateral_TF_EFC) - .CT2scaledSeg(..Thigh.CT_Data.Medial_TF_EFC));
+    AnyVec3 X = cross(.CT2scaledSeg(..Thigh.CT_Data.HipJointCenter)-O,Z);
     AnyVec3 Y = cross(Z,X);
     AnyVec3 rOffset= O;
     AnyMat33 AOffset={X/vnorm(X),Y/vnorm(Y),Z/vnorm(Z)}';
@@ -77,7 +77,7 @@ AnySeg InvisibleTibia = {
     };
     
     AnyRefNode Medial_TF_FFC = {
-      DEFINE_LOCAL_COORDINATE_Flex2scaledSeg(...Thigh.Flexed_Data.Medial_TF_FFC)
+      DEFINE_LOCAL_COORDINATE_Flexed2scaledSeg(...Thigh.Flexed_Data.Medial_TF_FFC)
       AnyDrawNode drw ={Visible=Off;ScaleXYZ=0.002*{1,1,1};RGB={1,1,1};};
     };
     
@@ -87,7 +87,7 @@ AnySeg InvisibleTibia = {
     }; 
     
     AnyRefNode TEMP_Lateral_TF_FFC = {
-      DEFINE_LOCAL_COORDINATE_Flex2scaledSeg(...Thigh.Flexed_Data.Lateral_TF_FFC)
+      DEFINE_LOCAL_COORDINATE_Flexed2scaledSeg(...Thigh.Flexed_Data.Lateral_TF_FFC)
       AnyDrawNode drw ={Visible=Off;ScaleXYZ=0.002*{1,1,1};RGB={1,1,1};};
     };
     

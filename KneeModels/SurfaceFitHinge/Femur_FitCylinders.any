@@ -1,4 +1,4 @@
- AnyFunTransform3D &CustomMarkerScaling = SubjectSpecificScaling.RegTransform;
+ AnyFunTransform3D &CT2scaledSeg = SubjectSpecificScaling.RegTransform;
 AnyFunTransform3D &Femur2CT = SubjectSpecificScaling.Seg2CT;
 //------------------------------------------------------------------------------
 // Surface fits for entire lateral and medial condyles, for new hinge joint model
@@ -8,7 +8,7 @@ AnyDrawSurf Medial_TF_surf = {
   Visible=Off;
   ScaleXYZ = {1.0, 1.0, 1.0}*..AMirroring;
   RGB = {0,1,0};
-  AnyFunTransform3D &Scale =.CustomMarkerScaling;
+  AnyFunTransform3D &Scale =.CT2scaledSeg;
   Face=-1;
   AnyInt NumPoints = STL_Size(FileName, 1)[0];
   AnyFloat points = GetVertices(iarr(0, 1, NumPoints-1));
@@ -19,7 +19,7 @@ AnyDrawSurf Lateral_TF_surf = {
   Visible=Off;
   ScaleXYZ = {1.0, 1.0, 1.0}*..AMirroring;
   RGB = {0,1,0};
-  AnyFunTransform3D &Scale =.CustomMarkerScaling;
+  AnyFunTransform3D &Scale =.CT2scaledSeg;
   Face=-1;
   AnyInt NumPoints = STL_Size(FileName, 1)[0];
   AnyFloat points = GetVertices(iarr(0, 1, NumPoints-1));

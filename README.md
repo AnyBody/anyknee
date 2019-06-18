@@ -1,7 +1,7 @@
 # AnyKnee
 The name 'AnyKnee' plays on the 'Any' terminology of the AnyBody modeling language. 
 
-AnyKnee is a stand alone model that introduces two types of knee joints that can be subsituted in for the generic hinge model available in AnyBody. These joints include: a scalable moving-axis tibiofemoral joint and a hinge tibiofemoral joint based off femoral condyle surface fits. These two examples are only the beginning, in reality **any** user-defined knee joint could be implemented. These examples will make it easier for users to develop and addin their own knee joint type into AnyBody. 
+AnyKnee is a stand alone model that introduces two types of knee joints that can be subsituted in for the generic hinge model available in AnyBody. These joints include: a scalable moving-axis tibiofemoral joint and a hinge tibiofemoral joint based off femoral condyle surface fits. These two examples are only the beginning, in reality *any* user-defined knee joint could be implemented. These examples will make it easier for users to develop and addin their own knee joint type into AnyBody. 
 
 The original models were developed by [Christine Dzialo](https://www.linkedin.com/in/christine-dzialo-111AAU/)
 at Aalborg University (AAU, Aalborg, Denmark) as part of her PhD work. Then implemented as a scalable moving-axis model when she joined the AnyBody Technology team in 2019.

@@ -1,6 +1,4 @@
-AnyFunTransform3D &CustomMarkerScaling = SubjectSpecificScaling.RegTransform;
-AnyFunTransform3D &Tibia2CT = SubjectSpecificScaling.Seg2CT;
-AnyFunTransform3D &Femur_to_CT = .Thigh.SubjectSpecificScaling.Seg2CT;
+AnyFunTransform3D &CT2scaledSeg = SubjectSpecificScaling.RegTransform;
 
 AnyVec3 rOffset= KneeJointAnatomicalFrame.sRel;
 AnyMat33 AOffset= KneeJointAnatomicalFrame.ARel;
@@ -8,15 +6,8 @@ AnyMat33 AOffset= KneeJointAnatomicalFrame.ARel;
 AnyDrawRefFrame fr = {Visible=Off;ScaleXYZ={1,1,1}*0.1;}; 
 
 AnyRefNode KneeJoint = {
-  sRel = (
-  .CustomMarkerScaling(.Femur_to_CT(..Thigh.EpicondylusFemorisMedialis.sRel))
-  +.CustomMarkerScaling(.Femur_to_CT(..Thigh.EpicondylusFemorisLateralis.sRel))
-  )/2.0;
-  ARel = RotMat(
-  sRel,
-  .CustomMarkerScaling(.Femur_to_CT(..Thigh.EpicondylusFemorisLateralis.sRel)),
-  .CustomMarkerScaling(.Femur_to_CT(..Thigh.HipJoint.sRel))
-  )*RotMat(...Sign*pi/2,y);      
+  sRel = (.CT2scaledSeg(..Thigh.CT_Data.MedialEpicondyle) +.CT2scaledSeg(..Thigh.CT_Data.LateralEpicondyle))/2.0;
+  ARel = RotMat(sRel,.CT2scaledSeg(..Thigh.CT_Data.LateralEpicondyle),.CT2scaledSeg(..Thigh.CT_Data.HipJointCenter))*RotMat(...Sign*pi/2,y);      
   AnyDrawRefFrame drw={Visible= Off; ScaleXYZ=0.1*{1,1,1};RGB={0,1,0};};
 };
 

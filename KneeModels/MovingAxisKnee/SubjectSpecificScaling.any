@@ -1,7 +1,7 @@
 AnyFolder SubjectSpecificScaling = {
   
   //transformation from CT bone into scaled segmental ref. frame
-  AnyFunTransform3DIdentity RegTransform = {
+  AnyFunTransform3DIdentity CT2scaledSeg = {
     PreTransforms = {&.CT2Seg, &..Scale};
   };
   
@@ -9,8 +9,8 @@ AnyFolder SubjectSpecificScaling = {
   AnyFunTransform3D &TScale2SegFrame = .Scale.T0GT0Inv;
   
   //transformation from flexed bone position to scaled segmental ref. frame
-  AnyFunTransform3DIdentity Flex2scaledSeg = {
-    PreTransforms = {&.Flex2Seg, &..Scale};
+  AnyFunTransform3DIdentity Flexed2scaledSeg = {
+    PreTransforms = {&.Flexed2Seg, &..Scale};
   };  
   
   //transformation from the scaled segmental ref. frame to CT ref. frame
@@ -54,7 +54,7 @@ AnyFolder SubjectSpecificScaling = {
   };  
   
   //transformation from flexed bone position ref. frame to unscaled segmental ref. frame
-  AnyFunTransform3DLin2 Flex2Seg = {
+  AnyFunTransform3DLin2 Flexed2Seg = {
     AnyString SourceFN = "STLs\" + ..Bone + "_90_R.stl";
     AnyString TargetFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.1\Seg_RefFrame_STLs\Seg_" + ..Bone + "_R.stl";
     AnyFileVar SourceSTL = SourceFN;

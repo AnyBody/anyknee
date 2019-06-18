@@ -2,10 +2,10 @@
 #define DEFINE_LOCAL_COORDINATE(rNode) sRel = ((rNode)-.rOffset)*.AOffset;
 #endif 
 #ifndef DEFINE_LOCAL_COORDINATE_CT2scaledSeg
-#define DEFINE_LOCAL_COORDINATE_CT2scaledSeg(rNode) sRel = (..CustomMarkerScaling(rNode)-.rOffset)*.AOffset;
+#define DEFINE_LOCAL_COORDINATE_CT2scaledSeg(rNode) sRel = (..CT2scaledSeg(rNode)-.rOffset)*.AOffset;
 #endif 
-#ifndef DEFINE_LOCAL_COORDINATE_Flex2scaledSeg
-#define DEFINE_LOCAL_COORDINATE_Flex2scaledSeg(rNode) sRel = (..Flex2scaledSeg(rNode)-.rOffset)*.AOffset;
+#ifndef DEFINE_LOCAL_COORDINATE_Flexed2scaledSeg
+#define DEFINE_LOCAL_COORDINATE_Flexed2scaledSeg(rNode) sRel = (..Flexed2scaledSeg(rNode)-.rOffset)*.AOffset;
 #endif 
 
 #define AddPointCloud(name,setR,setB) AnyDrawPointCloud ptcl_##name = {Points = .name##_surf.points;PointStyle.Style = PointStyleSphere;Points3D = On;ShowNames = On;RGB={setR,0,setB};PointStyle.Size=0.0015;};
