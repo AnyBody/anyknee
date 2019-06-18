@@ -1,45 +1,20 @@
-AnyFunTransform3D &CT2scaledSeg = SubjectSpecificScaling.RegTransform;
+AnyFunTransform3D &CT2scaledSeg = SubjectSpecificScaling.CT2scaledSeg;
 
-AnyVec3 rOffset= KneeJointAnatomicalFrame.sRel;
-AnyMat33 AOffset= KneeJointAnatomicalFrame.ARel;
+AnyRefNode Lateral_TF ={
+sRel=.CT2scaledSeg(..Thigh.CT_Data.Lateral_TF);
+};
 
-AnyDrawRefFrame fr = {Visible=Off;ScaleXYZ={1,1,1}*0.1;}; 
+AnyRefNode Medial_TF ={
+sRel=.CT2scaledSeg(..Thigh.CT_Data.Medial_TF);
+};
 
+AnyRefNode HipJoint ={
+sRel=.CT2scaledSeg(..Thigh.CT_Data.HipJointCenter);
+};
+
+//for use in new hinge joint based on surface fits of condyle surfaces
 AnyRefNode KneeJoint = {
-  sRel = (.CT2scaledSeg(..Thigh.CT_Data.MedialEpicondyle) +.CT2scaledSeg(..Thigh.CT_Data.LateralEpicondyle))/2.0;
-  ARel = RotMat(sRel,.CT2scaledSeg(..Thigh.CT_Data.LateralEpicondyle),.CT2scaledSeg(..Thigh.CT_Data.HipJointCenter))*RotMat(...Sign*pi/2,y);      
-  AnyDrawRefFrame drw={Visible= Off; ScaleXYZ=0.1*{1,1,1};RGB={0,1,0};};
+  sRel= (.Medial_TF.sRel + .Lateral_TF.sRel)/2; 
+  ARel = RotMat(sRel,.Lateral_TF.sRel,.HipJoint.sRel)*RotMat(...Sign*pi/2,y);      
+  AnyDrawRefFrame drw={Visible= On; ScaleXYZ=0.1*{1,1,1};RGB={0,0,1};};
 };
-
-KneeJointAnatomicalFrame={
-  AnyVec3 rOffset= sRel;
-  AnyMat33 AOffset= ARel;
-  
-  AnyRefNode Lateral_TF = {
-    DEFINE_LOCAL_COORDINATE_CT2scaledSeg(...Thigh.CT_Data.Lateral_TF)
-    AnyDrawNode drw={Visible=Off;ScaleXYZ={1,1,1}*0.002;};
-  };
-  
-  AnyRefNode Medial_TF = {
-    DEFINE_LOCAL_COORDINATE_CT2scaledSeg(...Thigh.CT_Data.Medial_TF)
-    AnyDrawNode drw={Visible=Off;ScaleXYZ={1,1,1}*0.002;};
-  }; 
-  AnyRefNode HipJoint = {
-    DEFINE_LOCAL_COORDINATE_CT2scaledSeg(...Thigh.CT_Data.HipJointCenter)
-    AnyDrawNode drw={Visible=Off;ScaleXYZ={1,1,1}*0.002;};
-  }; 
-  
-  AnyRefNode KneeJoint = {
-    AnyVec3 O = (.Medial_TF.sRel + .Lateral_TF.sRel)/2; 
-    AnyVec3 Z = ....Sign*(.Lateral_TF.sRel - .Medial_TF.sRel);
-    AnyVec3 X = cross((.HipJoint.sRel-O),Z);
-    AnyVec3 Y = cross(Z,X);
-    sRel= O;
-    ARel ={X/vnorm(X),Y/vnorm(Y),Z/vnorm(Z)}'; 
-//    AnyDrawRefFrame drw={Visible= On; ScaleXYZ=0.1*{1,1,1};RGB={0,1,0};};
-  };  
-};
-
-
-
-

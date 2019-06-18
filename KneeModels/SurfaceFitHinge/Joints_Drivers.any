@@ -1,10 +1,9 @@
 Jnt = {
   AnyRevoluteJoint Knee = {
     Axis = z;
-    AnyRefFrame &Femur = ..Seg.Thigh.KneeJointAnatomicalFrame.KneeJoint;
-    AnyRefFrame &Tibia = ..Seg.Shank.KneeJointAnatomicalFrame.KneeJoint;
-  };
-  
+    AnyRefFrame &Femur = ..Seg.Thigh.KneeJoint;
+    AnyRefFrame &Tibia = ..Seg.Shank.KneeJoint;
+  }; 
 };
 
 

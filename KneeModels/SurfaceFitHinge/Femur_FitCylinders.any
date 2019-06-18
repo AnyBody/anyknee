@@ -1,8 +1,7 @@
- AnyFunTransform3D &CT2scaledSeg = SubjectSpecificScaling.RegTransform;
-AnyFunTransform3D &Femur2CT = SubjectSpecificScaling.Seg2CT;
-//------------------------------------------------------------------------------
-// Surface fits for entire lateral and medial condyles, for new hinge joint model
+AnyFunTransform3D &CT2scaledSeg = SubjectSpecificScaling.CT2scaledSeg;
+AnyFunTransform3D &Femur2CT = SubjectSpecificScaling.scaledSeg2CT;
 
+// Surface selections of entire lateral and medial condyles
 AnyDrawSurf Medial_TF_surf = {
   FileName = "STLs\Medial_TF.stl";
   Visible=Off;
@@ -25,55 +24,30 @@ AnyDrawSurf Lateral_TF_surf = {
   AnyFloat points = GetVertices(iarr(0, 1, NumPoints-1));
 };
 
+//combine points from medial and lateral condyles for initial cylinder fit
 AnyFloat TF_points =arrcat(Medial_TF_surf.points, Lateral_TF_surf.points);
 FitCylinder(TF)
-FitCylinder_PC(TF,Medial_TF,On,On)
-FitCylinder_PC(TF,Lateral_TF,On,On)
 
-AddPointCloud(Medial_TF,1,0)
-AddPointCloud(Lateral_TF,1,0)
+// Surface fits for entire lateral and medial condyles
+FitCylinder_PC(TF,Medial_TF,Off,Off)
+FitCylinder_PC(TF,Lateral_TF,Off,Off)
 
+//AddPointCloud(Medial_TF,1,0)
+//AddPointCloud(Lateral_TF,1,0)
+
+
+//for use in new hinge joint based on surface fits of condyle surfaces
+AnyRefNode KneeJoint = {
+  AnyVec3 sRelUnscaled = ((.StdPar.EpicondylusFemorisLateralis)+(.StdPar.EpicondylusFemorisMedialis))/2;
+  sRel= (.Medial_TF.sRel + .Lateral_TF.sRel)/2; 
+  ARel = RotMat(sRel,.Lateral_TF.sRel,.HipJoint.sRel)*RotMat(...Sign*pi/2,y);      
+  AnyDrawRefFrame drw={Visible= On; ScaleXYZ=0.1*{1,1,1};RGB={0,1,0};};
+};
+
+//bring center of fits back into CT reference frame 
 AnyFolder CT_Data={
   AnyVec3 Medial_TF = .Femur2CT(.Medial_TF.sRel);
   AnyVec3 Lateral_TF = .Femur2CT(.Lateral_TF.sRel);
-  AnyVec3 MedialEpicondyle= .Femur2CT(.EpicondylusFemorisMedialis.sRel);
-  AnyVec3 LateralEpicondyle= .Femur2CT(.EpicondylusFemorisLateralis.sRel);
-  AnyVec3 HipJointCenter= .Femur2CT(.HipJoint.sRel);
+  AnyVec3 HipJointCenter = .Femur2CT(.HipJoint.sRel);
 };
 
-AnyVec3 rOffset= KneeJointAnatomicalFrame.sRel;
-AnyMat33 AOffset= KneeJointAnatomicalFrame.ARel;
-
-AnyRefNode KneeJoint = {
-  sRel = (.EpicondylusFemorisMedialis.sRel+.EpicondylusFemorisLateralis.sRel)/2.0;
-  ARel = RotMat(sRel,.EpicondylusFemorisLateralis.sRel,.HipJoint.sRel)*RotMat(...Sign*pi/2,y);      
-  AnyDrawRefFrame drw={Visible=Off;ScaleXYZ=0.1*{1,1,1};RGB={0,1,0};}; 
-};
-
-KneeJointAnatomicalFrame = {
-  AnyVec3 rOffset= sRel;
-  AnyMat33 AOffset= ARel;
-  
-  AnyRefNode Lateral_TF = {
-    DEFINE_LOCAL_COORDINATE(..Lateral_TF.sRel)
-    AnyDrawNode drw={Visible=Off;RGB={0,0,1};ScaleXYZ={1,1,1}*0.002;};
-  };
-  AnyRefNode Medial_TF = {
-    DEFINE_LOCAL_COORDINATE(..Medial_TF.sRel)
-    AnyDrawNode drw={Visible=Off;RGB={0,0,1};ScaleXYZ={1,1,1}*0.002;};
-  }; 
-  AnyRefNode HipJoint = {
-    DEFINE_LOCAL_COORDINATE(..HipJoint.sRel)
-    AnyDrawNode drw={Visible=Off;RGB={0,0,1};ScaleXYZ={1,1,1}*0.002;};
-  };
-  
-  AnyRefNode KneeJoint = {
-    AnyVec3 O = (.Medial_TF.sRel + .Lateral_TF.sRel)/2; 
-    AnyVec3 Z = ....Sign*(.Lateral_TF.sRel - .Medial_TF.sRel);
-    AnyVec3 X = cross((.HipJoint.sRel-O),Z);
-    AnyVec3 Y = cross(Z,X);
-    sRel= O;
-    ARel ={X/vnorm(X),Y/vnorm(Y),Z/vnorm(Z)}';
-    AnyDrawRefFrame drw={Visible= On; ScaleXYZ=0.1*{1,1,1};RGB={0,0,1};};
-  };
-};

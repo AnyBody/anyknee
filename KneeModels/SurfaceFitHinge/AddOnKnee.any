@@ -2,7 +2,7 @@
 #define DEFINE_LOCAL_COORDINATE(rNode) sRel = ((rNode)-.rOffset)*.AOffset;
 #endif 
 #ifndef DEFINE_LOCAL_COORDINATE_CT2scaledSeg
-#define DEFINE_LOCAL_COORDINATE_CT2scaledSeg(rNode) sRel = (..CT2scaledSeg(rNode)-.rOffset)*.AOffset;
+#define DEFINE_LOCAL_COORDINATE_CT2scaledSeg(rNode) sRel = (.CT2scaledSeg(rNode)-.rOffset)*.AOffset;
 #endif 
 
 #define AddPointCloud(name,setR,setB) AnyDrawPointCloud ptcl_##name = {Points = .name##_surf.points;PointStyle.Style = PointStyleSphere;Points3D = On;ShowNames = On;RGB={setR,0,setB};PointStyle.Size=0.0015;};
@@ -35,10 +35,6 @@ Main = {
             #include "SubjectSpecificScaling.any"
             #include "Femur_FitCylinders.any"
 
-            KneeJoint = {
-              AnyVec3 sRelUnscaled = ((.StdPar.EpicondylusFemorisLateralis)+(.StdPar.EpicondylusFemorisMedialis))/2;
-            };
-            
             AnyString Bone = "Femur";
             
           }; 
@@ -76,12 +72,6 @@ Main = {
           AnyMat33 AMirroring = { {1,0,0},{0,1,0},{0,0,-1}};
           
           Thigh  = {  
-            
-            KneeJoint = {
-              
-              AnyVec3 sRelUnscaled = ((.StdPar.EpicondylusFemorisLateralis)+(.StdPar.EpicondylusFemorisMedialis))/2;
-              
-            };
             
             AnyString Bone = "Femur";
             #include "SubjectSpecificScaling.any"

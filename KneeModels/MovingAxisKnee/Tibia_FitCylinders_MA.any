@@ -1,5 +1,5 @@
 AnyFunTransform3D &CT2scaledSeg = SubjectSpecificScaling.CT2scaledSeg;
-AnyFunTransform3D &Tibia2CT = SubjectSpecificScaling.Seg2CT;
+AnyFunTransform3D &Tibia2CT = SubjectSpecificScaling.scaledSeg2CT;
 AnyFunTransform3D &Flexed2scaledSeg = SubjectSpecificScaling.Flexed2scaledSeg;
 
 AnyVec3 rOffset= KneeJointAnatomicalFrame.sRel;

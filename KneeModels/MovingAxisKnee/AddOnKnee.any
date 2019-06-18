@@ -37,19 +37,13 @@ Main = {
           
           Thigh  = {
             
-            #include "SubjectSpecificScaling.any"
-            #include "Femur_FitCylinders_MA.any"
-            
             // Length between Tibiofemoral ECFs m->l (Femur Registration)
             AnyVar L1 = vnorm(Lateral_TF_EFC.sRel - Medial_TF_EFC.sRel,2.0);
-            AnyVar L1_test = vnorm(EpicondylusFemorisLateralis.sRel - EpicondylusFemorisMedialis.sRel,2.0);
-
-            KneeJoint = {
-              AnyVec3 sRelUnscaled = ((.StdPar.EpicondylusFemorisLateralis)+(.StdPar.EpicondylusFemorisMedialis))/2;
-            };
-            
+ 
             AnyString Bone = "Femur";
             
+            #include "SubjectSpecificScaling.any"
+            #include "Femur_FitCylinders_MA.any"
           }; 
           
           Shank  = {
@@ -93,15 +87,9 @@ Main = {
             
             // Length between Tibiofemoral ECFs m->l (Femur Registration)
             AnyVar L1 = vnorm(Lateral_TF_EFC.sRel - Medial_TF_EFC.sRel,2.0);
-            AnyVar L1_test = vnorm(EpicondylusFemorisLateralis.sRel - EpicondylusFemorisMedialis.sRel,2.0);
-
-            KneeJoint = {
-              
-              AnyVec3 sRelUnscaled = ((.StdPar.EpicondylusFemorisLateralis)+(.StdPar.EpicondylusFemorisMedialis))/2;
-              
-            };
             
             AnyString Bone = "Femur";
+            
             #include "SubjectSpecificScaling.any"
             #include "Femur_FitCylinders_MA.any"
             

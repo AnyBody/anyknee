@@ -3,12 +3,15 @@ Thigh = {
     sRel = (.EpicondylusFemorisMedialis.sRel+.EpicondylusFemorisLateralis.sRel)/2.0;
     ARel = RotMat(sRel,.EpicondylusFemorisLateralis.sRel,.HipJoint.sRel)*RotMat(...Sign*pi/2,y);      
     AnyDrawRefFrame drw={Visible=Off;ScaleXYZ=0.1*{1,1,1};RGB={0,1,0};}; 
+    
+    AnyVec3 sRelUnscaled = ((.StdPar.EpicondylusFemorisLateralis)+(.StdPar.EpicondylusFemorisMedialis))/2;
+    
   };
 };
 
  
 Shank = {  
-  AnyFunTransform3D &Femur_to_CT = .Thigh.SubjectSpecificScaling.Seg2CT;
+  AnyFunTransform3D &Femur_to_CT = .Thigh.SubjectSpecificScaling.scaledSeg2CT;
   AnyRefNode KneeJoint = {
     sRel = (
        .CT2scaledSeg(.Femur_to_CT(..Thigh.EpicondylusFemorisMedialis.sRel))
