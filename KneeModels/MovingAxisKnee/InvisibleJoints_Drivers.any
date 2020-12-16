@@ -6,11 +6,22 @@ Jnt = {
     AnyRefFrame &InvTibia = ..Seg.InvisibleTibia;
   };
   
-  AnyFunInterpol MovingAxisCutOffFunction = {
+   AnyFunInterpol MovingAxisCutOffFunction_few_points = {
     Type = PiecewiseLinear ;
     T = {-180.0,..GS_Measures.TF_FE_90,..GS_Measures.TF_FE_0,180.0};
     Data = {{-1.0,-1.0,0.0,0.0}};
   }; 
+
+  AnyVector Resampling_T = farr(-180.0,360/1000,1000);
+  AnyFloat Resampling_Data = MovingAxisCutOffFunction_few_points(Resampling_T)';
+
+  AnyFunInterpol MovingAxisCutOffFunction = {
+    Type = Bspline ;
+    T = .Resampling_T;
+    Data = {.Resampling_Data};
+  };
+  
+  
   AnyKinMeasureFunComb1 CutOffKneeFlexion = {
     Functions = {&.MovingAxisCutOffFunction};
     AnyKinMeasureLinComb knee_flexion = {
