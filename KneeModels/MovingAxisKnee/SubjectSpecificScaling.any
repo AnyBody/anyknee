@@ -15,8 +15,8 @@ AnyFolder SubjectSpecificScaling = {
   
   //transformation from the scaled segmental ref. frame to CT ref. frame
   AnyFunTransform3DLin2 scaledSeg2CT = {
-    AnyString SourceFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.1\Seg_RefFrame_STLs\Seg_" + ..Bone + "_R.stl";
-    AnyString TargetFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.1\CT_RefFrame_STLs\CT_" + ..Bone + "_R.stl";
+    AnyString SourceFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.2\Seg_RefFrame_STLs\Seg_" + ..Bone + "_R.stl";
+    AnyString TargetFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.2\CT_RefFrame_STLs\CT_" + ..Bone + "_R.stl";
     AnyFileVar SourceSTL = SourceFN;
     AnyFileVar TargetSTL = TargetFN;
     AnyMatrix Points0unscaled = STL_Vertices(SourceSTL, iarr(0, 1, NumPoints0 - 1), 1)*...AMirroring;
@@ -29,7 +29,7 @@ AnyFolder SubjectSpecificScaling = {
   
   //transformation from the scaled segmental ref. frame to flexed bone position ref. frame
   AnyFunTransform3DLin2 Seg2Flexed = {
-    AnyString SourceFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.1\Seg_RefFrame_STLs\Seg_" + ..Bone + "_R.stl";
+    AnyString SourceFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.2\Seg_RefFrame_STLs\Seg_" + ..Bone + "_R.stl";
     AnyString TargetFN = "STLs\" + ..Bone + "_90_R.stl";
     AnyFileVar SourceSTL = SourceFN;
     AnyFileVar TargetSTL = TargetFN;
@@ -43,8 +43,8 @@ AnyFolder SubjectSpecificScaling = {
   
   //transformation from CT ref. frame to unscaled segmental ref. frame
   AnyFunTransform3DLin2 CT2Seg = {
-    AnyString SourceFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.1\CT_RefFrame_STLs\CT_" + ..Bone + "_R.stl";
-    AnyString TargetFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.1\Seg_RefFrame_STLs\Seg_" + ..Bone + "_R.stl";
+    AnyString SourceFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.2\CT_RefFrame_STLs\CT_" + ..Bone + "_R.stl";
+    AnyString TargetFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.2\Seg_RefFrame_STLs\Seg_" + ..Bone + "_R.stl";
     AnyFileVar SourceSTL = SourceFN;
     AnyFileVar TargetSTL = TargetFN;
     AnyInt NumPoints0 = STL_Size(SourceSTL, 1)[0];
@@ -56,7 +56,7 @@ AnyFolder SubjectSpecificScaling = {
   //transformation from flexed bone position ref. frame to unscaled segmental ref. frame
   AnyFunTransform3DLin2 Flexed2Seg = {
     AnyString SourceFN = "STLs\" + ..Bone + "_90_R.stl";
-    AnyString TargetFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.1\Seg_RefFrame_STLs\Seg_" + ..Bone + "_R.stl";
+    AnyString TargetFN = ANYBODY_PATH_BODY+"\LegTLEM\TLEM2.2\Seg_RefFrame_STLs\Seg_" + ..Bone + "_R.stl";
     AnyFileVar SourceSTL = SourceFN;
     AnyFileVar TargetSTL = TargetFN;
     AnyInt NumPoints0 = STL_Size(SourceSTL, 1)[0];

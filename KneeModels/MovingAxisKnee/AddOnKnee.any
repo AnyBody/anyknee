@@ -11,9 +11,10 @@
 #define AddPointCloud(name,setR,setB) AnyDrawPointCloud ptcl_##name = {Points = .name##_surf.points;PointStyle.Style = PointStyleSphere;Points3D = On;ShowNames = On;RGB={setR,0,setB};PointStyle.Size=0.0015;};
 
 // fit cylinder to given point cloud without fixed direction
-#define FitCylinder(name) AnyRefNode name = {sRel = test_cylinder_fit.sRel; ARel = test_cylinder_fit.ARel;AnyDrawNode drw={Visible=Off;ScaleXYZ={0,0,0}*0.001;};AnyDrawRefFrame fr = {Visible=Off;ScaleXYZ={1,1,1}*0.1;RGB={1,0,0};};  AnySurfCylinderFit test_cylinder_fit = {Length = 0.000001;FixedDirection = Off;Direction = {0.0, 0.0, 1.0}; Points = DesignVar(..name##_points);AnyDrawParamSurf srf_##name={Visible = Off;RGB={0,1,1};Opacity=0.2;};};}; 
+#define FitCylinder(name) AnySurfCylinderFit name = {AnyDrawRefFrame fr = {Visible=Off;ScaleXYZ={1,1,1}*0.1;RGB={1,0,0};};Length = 0.000001;FixedDirection = Off;Direction = {0.0, 0.0, 1.0};Points = DesignVar(.name##_points);AnyDrawParamSurf srf_##name={Visible = Off;RGB={0,1,1};Opacity=0.2;};}; 
+
 // fit cylinder to condyle point clouds with direction fixed to secondary PC of a cylinder fit to medial and lateral condyles combined
-#define FitCylinder_PC(name1,name2,Vis_n,Vis_par) AnyRefNode name2 = {sRel = test_cylinder_fit.sRel; ARel = (test_cylinder_fit.ARel);AnyDrawNode drw={Visible=Vis_n;RGB= {0,0,0};ScaleXYZ={1,1,1}*0.002;}; AnySurfCylinderFit test_cylinder_fit = {Length = 0.00001;FixedDirection =On;Direction = ..name1.test_cylinder_fit.ARel[2]*...AMirroring; Points = DesignVar(..name2##_surf.points);AnyDrawParamSurf srf_##name2={Visible =Vis_par;RGB={0,1,1};Opacity=0.2;};};}; 
+#define FitCylinder_PC(name1,name2,Vis_n,Vis_par) AnySurfCylinderFit name2 = {AnyDrawNode drw={Visible=Vis_n;RGB= {0,0,0};ScaleXYZ={1,1,1}*0.002;};Length = 0.00001;FixedDirection =On;Direction = .name1.ARel[2]*..AMirroring;Points = DesignVar(.name2##_surf.points);AnyDrawParamSurf srf_##name2={Visible =Vis_par;RGB={0,1,1};Opacity=0.2;};}; 
 
 Main = {
 
